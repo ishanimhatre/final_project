@@ -76,7 +76,7 @@ def runClassifier():
     numTest = testing_amount
 
     if dset == "faces":
-        rawTrainingData, chosenList = samples.loadDataFile("facedata/facedatatrain", numTraining, FACE_DATUM_WIDTH,
+        rawTrainingData, chosenList = samples.loadDataFile("facedata/facedatatrainlabels", numTraining, FACE_DATUM_WIDTH,
                                                            FACE_DATUM_HEIGHT, True)
         trainingLabels = samples.loadLabelsFile("facedata/facedatatrainlabels", chosenList)
         rawValidationData, chosenList = samples.loadDataFile("facedata/facedatatrain", numTest, FACE_DATUM_WIDTH,
