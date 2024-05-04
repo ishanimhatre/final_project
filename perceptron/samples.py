@@ -6,7 +6,7 @@
 # John DeNero (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
 # For more info, see http://inst.eecs.berkeley.edu/~cs188/sp09/pacman.html
 
-import util
+#import util
 import random
 
 ## Constants
@@ -63,7 +63,8 @@ class Datum:
         self.width = DATUM_WIDTH
         if data == None:
             data = [[' ' for i in range(DATUM_WIDTH)] for j in range(DATUM_HEIGHT)]
-        self.pixels = util.arrayInvert(convertToInteger(data))
+        #self.pixels = util.arrayInvert(convertToInteger(data))
+        self.pixels = array_invert(convert_to_integer(data))
 
     def getPixel(self, column, row):
         """
@@ -82,7 +83,8 @@ class Datum:
     Renders the data item as an ascii image.
     """
         rows = []
-        data = util.arrayInvert(self.pixels)
+        #data = util.arrayInvert(self.pixels)
+        data = array_invert(self.pixels)
         for row in data:
             ascii = list(map(asciiGrayscaleConversionFunction, row))
             rows.append("".join(ascii))

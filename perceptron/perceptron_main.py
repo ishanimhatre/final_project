@@ -1,10 +1,17 @@
 # Parts of dataClassifier.py from  were used.
 # For more information, see https://inst.eecs.berkeley.edu//~cs188/sp11/projects/classification/classification.html
 
+# import perceptron
+# import samples
+# import sys
+# import util
+# import time
+# import numpy as np
+# import random
+
 import perceptron
 import samples
 import sys
-import util
 import time
 import numpy as np
 import random
@@ -20,7 +27,9 @@ def FeatureExtractorDigit(datum):
     Returns a set of pixel features indicating whether
     each pixel in the provided datum is white (0) or gray/black (1)
     """
-    features = util.Counter()
+    a = datum.getPixels()
+
+    features = {}
     for x in range(DIGIT_DATUM_WIDTH):
         for y in range(DIGIT_DATUM_HEIGHT):
             if datum.getPixel(x, y) > 0:
@@ -34,7 +43,9 @@ def FeatureExtractorFace(datum):
     Returns a set of pixel features indicating whether
     each pixel in the provided datum is an edge (1) or no edge (0)
     """
-    features = util.Counter()
+    a = datum.getPixels()
+
+    features = {}
     for x in range(FACE_DATUM_WIDTH):
         for y in range(FACE_DATUM_HEIGHT):
             if datum.getPixel(x, y) > 0:
@@ -44,6 +55,7 @@ def FeatureExtractorFace(datum):
     return features
 
 def runClassifier():
+
     # Get Inputs
     dset = input('Choose dataset (faces, digits): ')
     training_val = int(input('Enter amount of training data to use: '))
@@ -54,10 +66,7 @@ def runClassifier():
     elif dset == "digits":
         featureFunction = FeatureExtractorDigit
 
-    if dset == "digits":
-        legalLabels = list(range(10))
-    else:
-        legalLabels = list(range(2))
+    legalLabels = range(10) if dset == "digits" else range(2)
 
     # Classifier is Perceptron
     classifier = perceptron.PerceptronClassifier(legalLabels, ITERATIONS)
@@ -103,14 +112,15 @@ def runClassifier():
     # Conduct testing
     print("Testing...")
     guesses = classifier.classify(testData)
-    correct = sum(guesses[i] == testLabels[i] for i in range(len(testLabels)))
-    print(f"{correct} correct out of {len(testLabels)} ({100.0 * correct / len(testLabels):.1f}%).")
+    correct = sum(1 for i in range(len(testLabels)) if guesses[i] == testLabels[i])
+    print str(correct), ("correct out of " + str(len(testLabels)) + " (%.1f%%).") % (100.0 * correct / len(testLabels))
 
     # Training Duration
-    trainingDuration = f"Training Duration : {test_duration} seconds."
+    trainingDuration = "Training Duration : " + str(test_duration) + " seconds."
     print(trainingDuration)
 
 def runClassifierStats(first, second, third):
+
     # Get Inputs
     dset = first
     training_val = second
@@ -121,10 +131,7 @@ def runClassifierStats(first, second, third):
     elif dset == "digits":
         featureFunction = FeatureExtractorDigit
 
-    if dset == "digits":
-        legalLabels = list(range(10))
-    else:
-        legalLabels = list(range(2))
+    legalLabels = range(10) if dset == "digits" else range(2)
 
     # Classifier is Perceptron
     classifier = perceptron.PerceptronClassifier(legalLabels, ITERATIONS)
@@ -170,11 +177,11 @@ def runClassifierStats(first, second, third):
     # Conduct testing
     print("Testing...")
     guesses = classifier.classify(testData)
-    correct = sum(guesses[i] == testLabels[i] for i in range(len(testLabels)))
-    print(f"{correct} correct out of {len(testLabels)} ({100.0 * correct / len(testLabels):.1f}%).")
+    correct = sum(1 for i in range(len(testLabels)) if guesses[i] == testLabels[i])
+    print str(correct), ("correct out of " + str(len(testLabels)) + " (%.1f%%).") % (100.0 * correct / len(testLabels))
 
     # Training Duration
-    trainingDuration = f"Training Duration : {test_duration} seconds."
+    trainingDuration = "Training Duration : " + str(test_duration) + " seconds."
     print(trainingDuration)
 
     return float(100.0 * correct / len(testLabels))
